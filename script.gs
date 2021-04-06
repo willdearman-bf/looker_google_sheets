@@ -23,7 +23,7 @@ function onOpen() {
  *
  * @param {number} id The unique ID of the Look
  * @param {number} opt_format 1 for csv, 2 for raw sql - defaults to csv (optional)
-  * @param {number} opt_limit the query limit - defaults to 5000 if empty (optional)
+ * @param {number} opt_limit the query limit - defaults to 5000 if empty (optional)
  * @return The Look results data
  * @customfunction
  */
@@ -308,13 +308,15 @@ function LOOKER_GET_USERS() {
 // set credentials via prompt
 function setCred() {
     var ui = SpreadsheetApp.getUi();
-    var base_url_input = ui.prompt("Set your Looker API credentials", "Base URL (e.g. https://yourdomain.looker.com:19999/api/3.0):", ui.ButtonSet.OK_CANCEL);
+    //var base_url_input = ui.prompt("Set your Looker API credentials", "Base URL (e.g. https://yourdomain.looker.com:19999/api/3.0):", ui.ButtonSet.OK_CANCEL);
+    var base_url_input = "https://beyondfinance.looker.com:19999/api/3.0"
     var client_id_input = ui.prompt("Set your Looker API credentials", "Client ID:", ui.ButtonSet.OK_CANCEL);
     var client_id_secret = ui.prompt("Set your Looker API credentials", "Client Secret:", ui.ButtonSet
         .OK_CANCEL);
     var scriptProperties = PropertiesService.getScriptProperties();
     // assign them to scriptProperties so the user doesn't have to enter them over and over again
-    scriptProperties.setProperty("BASE_URL", base_url_input.getResponseText());
+    //scriptProperties.setProperty("BASE_URL", base_url_input.getResponseText());
+    scriptProperties.setProperty("BASE_URL", base_url_input);
     scriptProperties.setProperty("CLIENT_ID", client_id_input.getResponseText());
     scriptProperties.setProperty("CLIENT_SECRET", client_id_secret.getResponseText());
     // test the credentials with a /user call
@@ -348,7 +350,7 @@ function deleteCred() {
     scriptProperties.deleteAllProperties();
 }
 
-// login now checks for scriptProperties to ge t
+// login now checks for scriptProperties to get
 function login() {
     var scriptProperties = PropertiesService.getScriptProperties();
 
